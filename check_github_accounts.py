@@ -88,15 +88,18 @@ def main():
                 for username in project_details["Github Username"]:
                     futures.append(executor.submit(check_account_status, username))
 
-                for future in as_completed(futures):
-                    username, status = future.result()
-                    if status == "Suspended":
-                        if group_name not in suspended_accounts:
-                            suspended_accounts[group_name] = {}
-                        if project_name not in suspended_accounts[group_name]:
-                            suspended_accounts[group_name][project_name] = []
-                        suspended_accounts[group_name][project_name].append(username)
-    
+        for future in as_completed(futures):
+            username, status = future.result()
+            if status == "Suspended":
+                for group, group_details in custom_names.items():
+                    for project, project_details in group_details["projects"].items():
+                        if username in project_details["Github Username"]:
+                            if group_name not in suspended_accounts:
+                                suspended_accounts[group_name] = {}
+                            if project_name not in suspended_accounts[group_name]:
+                                suspended_accounts[group_name][project_name] = []
+                            suspended_accounts[group_name][project_name].append(username)
+
     if suspended_accounts and config['message_types'].get('AlertWithDetails', False):
         message_lines = ["🚨 Suspended Accounts Alert! 🚨"]
         for group_name, projects in suspended_accounts.items():
