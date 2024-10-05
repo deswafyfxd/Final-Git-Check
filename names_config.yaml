@@ -1,0 +1,37 @@
+Group1:
+  name: "Custom Group name 1"
+  projects:
+    Project1:
+      name: "Custom Project name 1"
+      Github Username:
+        - "username1"
+        - "username2"
+    Project2:
+      name: "Custom Project name 2"
+      Github Username:
+        - "username3"
+        - "username4"
+    Project3:
+      name: "Custom Project name 3"
+      Github Username:
+        - "username5"
+        - "username6"
+
+Group2:
+  name: "Custom Group name 2"
+  projects:
+    Project4:
+      name: "Custom Project name 4"
+      Github Username:
+        - "username7"
+        - "username8"
+    Project5:
+      name: "Custom Project name 5"
+      Github Username:
+        - "username9"
+        - "username10"
+    Project6:
+      name: "Custom Project name 6"
+      Github Username:
+        - "username11"
+        - "username12"
