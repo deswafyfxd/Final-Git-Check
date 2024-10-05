@@ -78,6 +78,7 @@ def send_discord_message(message):
 
 def main():
     suspended_accounts = {}
+    all_accounts_checked = []
 
     with ThreadPoolExecutor() as executor:
         futures = []
@@ -87,6 +88,7 @@ def main():
                 project_name = project_details["name"]
                 for username in project_details["Github Username"]:
                     futures.append(executor.submit(check_account_status, username))
+                    all_accounts_checked.append(username)
 
         results = {}
         for future in as_completed(futures):
@@ -98,7 +100,7 @@ def main():
             for project, project_details in group_details["projects"].items():
                 project_name = project_details["name"]
                 for username in project_details["Github Username"]:
-                    if results[username] == "Suspended":
+                    if results.get(username) == "Suspended":
                         if group_name not in suspended_accounts:
                             suspended_accounts[group_name] = {}
                         if project_name not in suspended_accounts[group_name]:
